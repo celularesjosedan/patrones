@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +15,7 @@
         body {
             font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
             background: #f5f7fb;
-            color: #1e293b;
+            color: #475569;
             padding: 1.5rem;
             min-height: 100vh;
             display: flex;
@@ -46,7 +47,7 @@
             border-radius: 40px;
         }
         .subtitle {
-            color: #64748b;
+            color: #6b7280;
             margin-top: 0.3rem;
             margin-bottom: 2rem;
             font-size: 1.05rem;
@@ -57,7 +58,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 1.2rem 2.5rem;
-            background: #f8fafc;
+            background: #f5f7f8;
             padding: 1.2rem 1.8rem;
             border-radius: 1.2rem;
             margin-bottom: 2.2rem;
@@ -81,10 +82,10 @@
         .stat-item .value {
             font-weight: 700;
             font-size: 1.4rem;
-            color: #0f172a;
+            color: #1f2937;
         }
         .stat-item .value.pending { color: #dc2626; }
-        .stat-item .value.tested { color: #16a34a; }
+        .stat-item .value.tested { color: #059669; }
         .btn-reset {
             background: #fee2e2;
             color: #b91c1c;
@@ -111,12 +112,12 @@
             gap: 0.8rem;
         }
         .section-title .badge {
-            background: #e2e8f0;
+            background: #dbe4e8;
             padding: 0.1rem 1rem;
             border-radius: 30px;
             font-size: 0.9rem;
             font-weight: 500;
-            color: #334155;
+            color: #475569;
         }
         .section-desc {
             color: #94a3b8;
@@ -154,12 +155,12 @@
             font-weight: 700;
             font-family: 'Courier New', monospace;
             letter-spacing: 0.5px;
-            color: #334155;
+            color: #475569;
         }
         .pin-card .probability {
             font-size: 0.7rem;
-            color: #64748b;
-            background: #f1f5f9;
+            color: #6b7280;
+            background: #eef2f3;
             padding: 0.1rem 0.5rem;
             border-radius: 20px;
             font-weight: 500;
@@ -172,8 +173,8 @@
             box-shadow: 0 8px 16px rgba(79,70,229,0.08);
         }
         .pin-card.tested {
-            background: #f1f5f9;
-            border-color: #cbd5e1;
+            background: #eef2f3;
+            border-color: #cbd5db;
             color: #94a3b8;
             cursor: default;
             opacity: 0.7;
@@ -187,19 +188,19 @@
             color: #94a3b8;
         }
         .pin-card.tested .probability {
-            background: #e2e8f0;
+            background: #dbe4e8;
             color: #94a3b8;
         }
-        .pin-card.tested svg .dot { fill: #cbd5e1 !important; }
-        .pin-card.tested svg .dot-outer { stroke: #cbd5e1 !important; }
-        .pin-card.tested svg .line { stroke: #cbd5e1 !important; }
+        .pin-card.tested svg .dot { fill: #cbd5db !important; }
+        .pin-card.tested svg .dot-outer { stroke: #cbd5db !important; }
+        .pin-card.tested svg .line { stroke: #cbd5db !important; }
         .pin-card.tested::after {
             content: "✓";
             position: absolute;
             top: 4px;
             right: 8px;
             font-size: 1.2rem;
-            color: #22c55e;
+            color: #10b981;
             font-weight: 700;
         }
 
@@ -209,7 +210,7 @@
         }
         .pattern-svg .dot-outer {
             fill: white;
-            stroke: #cbd5e1;
+            stroke: #cbd5db;
             stroke-width: 2;
         }
         .pattern-svg .dot {
@@ -225,7 +226,7 @@
             fill: none;
         }
         .pattern-svg .start-dot {
-            fill: #16a34a;
+            fill: #059669;
         }
         .pattern-svg .end-dot {
             fill: #dc2626;
@@ -242,7 +243,7 @@
         .footer {
             margin-top: 3rem;
             padding-top: 1.5rem;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px solid #dbe4e8;
             font-size: 0.85rem;
             color: #94a3b8;
             text-align: center;
@@ -264,7 +265,88 @@
         @media (max-width: 400px) {
             .pin-grid { grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); }
         }
-    </style>
+    
+        body {
+            background: linear-gradient(180deg, #f5f7f8 0%, #eef2f3 100%);
+            color: #1f2937;
+        }
+        .container {
+            max-width: 1180px;
+        }
+        .header, .stats, .section {
+            background: rgba(255,255,255,.86);
+            backdrop-filter: blur(8px);
+            border: 1px solid #dbe4e8;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+        }
+        .header h1 {
+            letter-spacing: -0.02em;
+        }
+        .theme-toggle {
+            margin-top: 12px;
+            border: 1px solid #cbd5db;
+            background: #ffffff;
+            color: #0f766e;
+            border-radius: 999px;
+            padding: 10px 14px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .theme-toggle:hover { background: #f0fdfa; }
+        .help-note {
+            margin-top: 14px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: #ecfeff;
+            border: 1px solid #bae6fd;
+            color: #155e75;
+            font-size: 0.98rem;
+        }
+        .pin-card {
+            transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+        }
+        .pin-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 22px rgba(15, 23, 42, 0.08);
+            border-color: #99f6e4;
+        }
+        .pin-card .pattern-label {
+            font-size: 1rem;
+            letter-spacing: .01em;
+        }
+        .pin-card .prob {
+            font-weight: 700;
+        }
+        .footer-note {
+            margin-top: 18px;
+            text-align: center;
+            color: #6b7280;
+            font-size: .95rem;
+        }
+        [data-theme="dark"] body {
+            background: linear-gradient(180deg, #111827 0%, #0f172a 100%);
+            color: #e5e7eb;
+        }
+        [data-theme="dark"] .header,
+        [data-theme="dark"] .stats,
+        [data-theme="dark"] .section {
+            background: rgba(17,24,39,.88);
+            border-color: #334155;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.26);
+        }
+        [data-theme="dark"] .theme-toggle {
+            background: #0f172a;
+            color: #99f6e4;
+            border-color: #334155;
+        }
+        [data-theme="dark"] .help-note {
+            background: rgba(15,118,110,.12);
+            border-color: rgba(45,212,191,.24);
+            color: #ccfbf1;
+        }
+        [data-theme="dark"] .footer-note { color: #94a3b8; }
+
+</style>
 </head>
 <body>
 <div class="container" id="app">
@@ -274,9 +356,10 @@
             <span>Letras + Comunes + Complejos</span>
         </h1>
         <div class="subtitle">
-            Marca los patrones (grilla 3x3 tipo Android) que ya has probado. Ordenados de más fáciles/comunes (letras del abecedario) a más complejos.
+            Marca los patrones de desbloqueo (grilla 3x3 tipo Android) que ya has probado. Están ordenados desde letras reconocibles y patrones comunes hasta combinaciones más complejas, para trabajar de forma clara y rápida.
         </div>
-    </header>
+        <button id="themeToggle" class="theme-toggle" type="button" aria-label="Cambiar tema">🌙 Tema</button>
+</header>
 
     <div class="stats-grid">
         <div class="stats">
@@ -290,7 +373,7 @@
     <!-- Sección Letras -->
     <div class="section-title">
         <span>🔤 Letras del abecedario</span>
-        <span class="badge" id="badgeLetras">0 pendientes</span>
+        <span class="badge" id="badgeLetras">Pendientes: 0</span>
     </div>
     <div class="section-desc">Los patrones más usados: forman una letra reconocible (L, Z, S, M, W, N, C, U, V...). Son los primeros que la gente prueba.</div>
     <div class="pin-grid" id="gridLetras"></div>
@@ -298,7 +381,7 @@
     <!-- Sección Comunes -->
     <div class="section-title">
         <span>⭐ Comunes</span>
-        <span class="badge" id="badgeComunes">0 pendientes</span>
+        <span class="badge" id="badgeComunes">Pendientes: 0</span>
     </div>
     <div class="section-desc">Patrones simples y simétricos: esquinas, líneas rectas, zigzags cortos. Muy frecuentes en dispositivos reales.</div>
     <div class="pin-grid" id="gridComunes"></div>
@@ -306,16 +389,18 @@
     <!-- Sección Complejos -->
     <div class="section-title">
         <span>🧩 Complejos</span>
-        <span class="badge" id="badgeComplejos">0 pendientes</span>
+        <span class="badge" id="badgeComplejos">Pendientes: 0</span>
     </div>
     <div class="section-desc">Patrones largos (7-9 puntos) con cruces y giros. Menos comunes pero posibles en usuarios más cuidadosos.</div>
     <div class="pin-grid" id="gridComplejos"></div>
 
     <div class="footer">
-        Probabilidad estimada a partir de estudios de seguridad sobre patrones de desbloqueo Android (frecuencia de uso real).
+        Probabilidad orientativa basada en patrones que la gente suele recordar o intentar primero en bloqueos Android. Úsalo como guía visual, no como criterio absoluto.
         <br />Grilla estándar 3x3 — el punto verde marca el inicio y el rojo el final del trazo.
         <br /><span style="opacity:0.6;">v1.0 — Patrones</span>
     </div>
+    <div class="help-note">Pensado para revisión rápida en taller: letras arriba, patrones comunes al centro y combinaciones largas al final. El punto verde marca el inicio y el rojo el cierre del trazo.</div>
+    <div class="footer-note">Diseño más limpio, alto contraste y mejor lectura para uso rápido en escritorio o móvil.</div>
 </div>
 
 <script>
@@ -363,6 +448,12 @@
             { label: 'H',  path: [1,4,7,4,5,6,3,6,9] },
             { label: 'K',  path: [7,4,1,5,3,6,9] },
             { label: 'P',  path: [7,4,1,2,3,6,5] }
+            { label: 'A',  path: [7, 4, 1, 2, 3, 6, 9, 5] },
+            { label: 'B',  path: [1, 4, 7, 8, 5, 4, 2, 3, 6, 9, 8] },
+            { label: 'D',  path: [1, 4, 7, 8, 9, 6, 3, 2] },
+            { label: 'G',  path: [3, 2, 1, 4, 7, 8, 9, 6, 5] },
+            { label: 'Q',  path: [1, 2, 3, 6, 9, 8, 7, 4, 5] },
+            { label: 'R',  path: [7, 4, 1, 2, 3, 6, 5, 8, 9] },
         ];
 
         // 2) PATRONES COMUNES — simples, simétricos, muy usados
@@ -440,17 +531,35 @@
         // ESTADO (localStorage)
         // ------------------------------------------------------------
         const STORAGE_KEY = 'patternTrackerState';
+        let memoryState = null;
+        function storageAvailable() {
+            try {
+                const key = '__pattern_test__';
+                localStorage.setItem(key, '1');
+                localStorage.removeItem(key);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+        const CAN_USE_STORAGE = storageAvailable();
 
         function loadState() {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) {
-                try { return JSON.parse(stored); } catch (e) { return null; }
+            if (CAN_USE_STORAGE) {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored) {
+                    try { return JSON.parse(stored); } catch (e) { return null; }
+                }
             }
-            return null;
+            return memoryState;
         }
 
         function saveState(state) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            if (CAN_USE_STORAGE) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } else {
+                memoryState = JSON.parse(JSON.stringify(state));
+            }
         }
 
         function keyFor(pattern) {
@@ -473,6 +582,25 @@
             });
             if (modified) saveState(fresh);
             return fresh;
+        }
+
+
+        const themeToggle = document.getElementById('themeToggle');
+        let activeTheme = 'light';
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            activeTheme = 'dark';
+        }
+        document.documentElement.setAttribute('data-theme', activeTheme);
+        if (themeToggle) {
+            const syncThemeLabel = () => {
+                themeToggle.textContent = activeTheme === 'dark' ? '☀️ Tema claro' : '🌙 Tema oscuro';
+            };
+            syncThemeLabel();
+            themeToggle.addEventListener('click', () => {
+                activeTheme = activeTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', activeTheme);
+                syncThemeLabel();
+            });
         }
 
         let state = initState();
@@ -524,7 +652,7 @@
             const probs = probsByCategory[cat.key];
             let pending = 0;
             cat.list.forEach(p => { if (!catState[keyFor(p)]) pending++; });
-            badge.textContent = pending + ' pendientes';
+            badge.textContent = 'Pendientes: ' + pending;
 
             let html = '';
             cat.list.forEach((pattern, index) => {
