@@ -13,8 +13,8 @@
         }
         body {
             font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
-            background: #f5f7fb;
-            color: #475569;
+            background: linear-gradient(180deg, #f5f7f8 0%, #eef2f3 100%);
+            color: #1f2937;
             padding: 1.5rem;
             min-height: 100vh;
             display: flex;
@@ -281,18 +281,7 @@
         .header h1 {
             letter-spacing: -0.02em;
         }
-        .theme-toggle {
-            margin-top: 12px;
-            border: 1px solid #cbd5db;
-            background: #ffffff;
-            color: #0f766e;
-            border-radius: 999px;
-            padding: 10px 14px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-        .theme-toggle:hover { background: #f0fdfa; }
-        .help-note {
+.help-note {
             margin-top: 14px;
             padding: 12px 14px;
             border-radius: 14px;
@@ -322,29 +311,6 @@
             color: #6b7280;
             font-size: .95rem;
         }
-        [data-theme="dark"] body {
-            background: linear-gradient(180deg, #111827 0%, #0f172a 100%);
-            color: #e5e7eb;
-        }
-        [data-theme="dark"] .header,
-        [data-theme="dark"] .stats,
-        [data-theme="dark"] .section {
-            background: rgba(17,24,39,.88);
-            border-color: #334155;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.26);
-        }
-        [data-theme="dark"] .theme-toggle {
-            background: #0f172a;
-            color: #99f6e4;
-            border-color: #334155;
-        }
-        [data-theme="dark"] .help-note {
-            background: rgba(15,118,110,.12);
-            border-color: rgba(45,212,191,.24);
-            color: #ccfbf1;
-        }
-        [data-theme="dark"] .footer-note { color: #94a3b8; }
-
 </style>
 </head>
 <body>
@@ -357,7 +323,6 @@
         <div class="subtitle">
             Marca los patrones de desbloqueo (grilla 3x3 tipo Android) que ya has probado. Están ordenados desde letras reconocibles y patrones comunes hasta combinaciones más complejas, para trabajar de forma clara y rápida.
         </div>
-        <button id="themeToggle" class="theme-toggle" type="button" aria-label="Cambiar tema">🌙 Tema</button>
 </header>
 
     <div class="stats-grid">
@@ -581,25 +546,6 @@
             });
             if (modified) saveState(fresh);
             return fresh;
-        }
-
-
-        const themeToggle = document.getElementById('themeToggle');
-        let activeTheme = 'light';
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            activeTheme = 'dark';
-        }
-        document.documentElement.setAttribute('data-theme', activeTheme);
-        if (themeToggle) {
-            const syncThemeLabel = () => {
-                themeToggle.textContent = activeTheme === 'dark' ? '☀️ Tema claro' : '🌙 Tema oscuro';
-            };
-            syncThemeLabel();
-            themeToggle.addEventListener('click', () => {
-                activeTheme = activeTheme === 'dark' ? 'light' : 'dark';
-                document.documentElement.setAttribute('data-theme', activeTheme);
-                syncThemeLabel();
-            });
         }
 
         let state = initState();
