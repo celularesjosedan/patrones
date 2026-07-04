@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Control de Patrones · Neon Dark</title>
+    <style>
+        /* Reset y base oscura */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #0b0f1a;
+            color: #e0e8f0;
+            padding: 1.5rem;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            background: #141a26;
+            border-radius: 1.8rem;
+            padding: 2rem 2rem 2.5rem;
+            border: 1px solid #2a3344;
+        }
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            color: #f0f4ff;
+        }
+        h1 span {
+            background: #1f2a3a;
+            color: #00f0c0;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 0.2rem 1.2rem;
+            border-radius: 40px;
+            border: 1px solid #00f0c0;
+            box-shadow: 0 0 8px rgba(0, 240, 192, 0.2);
+        }
+        .subtitle {
+            color: #a0b4cc;
+            margin-top: 0.3rem;
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+            border-left: 4px solid #00d4ff;
+            padding-left: 1rem;
+            background: linear-gradient(90deg, rgba(0,212,255,0.08) 0%, transparent 80%);
+        }
+        .stats-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem 2.5rem;
+            background: #10161f;
+            padding: 1.2rem 1.8rem;
+            border-radius: 1.2rem;
+            margin-bottom: 2.2rem;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #2a3344;
+        }
+        .stats {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .stat-item {
+            display: flex;
+            align-items: baseline;
+            gap: 0.4rem;
+        }
+        .stat-item .label {
+            font-weight: 500;
+            color: #8899bb;
+        }
+        .stat-item .value {
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #f0f4ff;
+        }
+        .stat-item .value.pending { color: #ff6b6b; }
+        .stat-item .value.tested { color: #00f0a0; }
+        .btn-reset {
+            background: #2a1f2f;
+            color: #ff7b9c;
+            border: 1px solid #ff7b9c;
+            padding: 0.5rem 1.6rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.1s, color 0.1s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            box-shadow: 0 0 12px rgba(255, 123, 156, 0.15);
+        }
+        .btn-reset:hover {
+            background: #ff7b9c;
+            color: #141a26;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #d0dcf0;
+        }
+        .section-title .badge {
+            background: #1f2a3a;
+            padding: 0.1rem 1rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #00d4ff;
+            border: 1px solid #00d4ff;
+            box-shadow: 0 0 8px rgba(0, 212, 255, 0.15);
+        }
+
+        /* Grid de patrones */
+        .pattern-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .pattern-card {
+            background: #1a2230;
+            border: 2px solid #2a3346;
+            border-radius: 1rem;
+            padding: 0.6rem 0.2rem;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 140px;
+            transition: background 0.1s, border-color 0.1s, opacity 0.1s;
+            position: relative;
+        }
+        .pattern-card canvas {
+            display: block;
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            background: #0f1620;
+            border: 1px solid #2a3344;
+            margin-bottom: 4px;
+        }
+        .pattern-card .pattern-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+        .pattern-card .pattern-length {
+            font-size: 0.6rem;
+            color: #8899bb;
+            opacity: 0.7;
+        }
+        .pattern-card .probability {
+            font-size: 0.7rem;
+            color: #00ffaa;
+            background: #0f1620;
+            padding: 0.1rem 0.5rem;
+            border-radius: 20px;
+            font-weight: 600;
+            border: 1px solid #00ffaa;
+            box-shadow: 0 0 12px rgba(0, 255, 170, 0.2);
+            text-shadow: 0 0 6px rgba(0,255,170,0.4);
+        }
+        .pattern-card:hover:not(.tested) {
+            background: #1f2a3a;
+            border-color: #00d4ff;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+        }
+        .pattern-card.tested {
+            background: #111822;
+            border-color: #2a3344;
+            opacity: 0.6;
+            cursor: default;
+        }
+        .pattern-card.tested canvas {
+            opacity: 0.5;
+            filter: grayscale(0.8);
+        }
+        .pattern-card.tested .probability {
+            background: #0a0f16;
+            color: #445566;
+            border-color: #2a3344;
+            box-shadow: none;
+            text-shadow: none;
+        }
+        .pattern-card.tested::after {
+            content: "✓";
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            font-size: 1.2rem;
+            color: #00f0a0;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(0, 240, 160, 0.3);
+        }
+
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #2a3344;
+            font-size: 0.85rem;
+            color: #668;
+            text-align: center;
+        }
+        .footer a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+            color: #00f0c0;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.8rem; }
+            .stats-grid { flex-direction: column; align-items: stretch; gap: 0.8rem; }
+            .stats { justify-content: space-between; }
+            .pattern-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+            .pattern-card { min-height: 120px; padding: 0.4rem 0.1rem; }
+            .pattern-card canvas { width: 60px; height: 60px; }
+        }
+        @media (max-width: 400px) {
+            .pattern-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); }
+            .pattern-card canvas { width: 50px; height: 50px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="app">
+    <header>
+        <h1>
+            🔐 Control de Patrones
+            <span>Top + Probabilidad</span>
+        </h1>
+        <div class="subtitle">
+            Marca los patrones ya probados. Probabilidad de éxito basada en frecuencia real.
+        </div>
+    </header>
+
+    <div class="stats-grid">
+        <div class="stats">
+            <div class="stat-item"><span class="label">📌 Pendientes:</span><span class="value pending" id="pendingCount">0</span></div>
+            <div class="stat-item"><span class="label">✅ Probados:</span><span class="value tested" id="testedCount">0</span></div>
+            <div class="stat-item"><span class="label">📊 Total:</span><span class="value" id="totalCount">0</span></div>
+        </div>
+        <button class="btn-reset" id="resetBtn">⟳ Reiniciar todo</button>
+    </div>
+
+    <!-- Sección patrones cortos (4 puntos) -->
+    <div class="section-title">
+        <span>Patrones de 4 puntos</span>
+        <span class="badge" id="badgeShort">0 pendientes</span>
+    </div>
+    <div class="pattern-grid" id="gridShort"></div>
+
+    <!-- Sección patrones largos (7-9 puntos) -->
+    <div class="section-title">
+        <span>Patrones de 7 a 9 puntos</span>
+        <span class="badge" id="badgeLong">0 pendientes</span>
+    </div>
+    <div class="pattern-grid" id="gridLong"></div>
+
+    <div class="footer">
+        Datos basados en estudios de seguridad · Probabilidad por ranking
+        <br /><span style="color:#00d4ff;">Neon Dark</span> · <span style="opacity:0.5;">v2.0</span>
+    </div>
+</div>
+
+<script>
+    (function() {
+        'use strict';
+
+        // ------------------------------------------------------------
+        // LISTAS DE PATRONES (50 cortos de 4 puntos, 50 largos de 7-9)
+        // ------------------------------------------------------------
+        const SHORT_PATTERNS = [
+            '1234','1236','1235','1237','1238',
+            '1239','1245','1247','1256','1267',
+            '1278','1289','1345','1356','1367',
+            '1378','1389','1456','1467','1478',
+            '1489','1567','1578','1589','1678',
+            '1689','1789','2345','2356','2367',
+            '2378','2389','2456','2467','2478',
+            '2489','2567','2578','2589','2678',
+            '2689','2789','3456','3467','3478',
+            '3489','3567','3578','3589','3678'
+        ];
+
+        const LONG_PATTERNS = [
+            '1234567','1234568','1234569','1234578','1234579',
+            '1234589','1234678','1234679','1234689','1234789',
+            '1235678','1235679','1235689','1235789','1236789',
+            '1245678','1245679','1245689','1245789','1246789',
+            '1256789','1345678','1345679','1345689','1345789',
+            '1346789','1356789','1456789','2345678','2345679',
+            '2345689','2345789','2346789','2356789','2456789',
+            '3456789','12345678','12345679','12345689','12345789',
+            '12346789','12356789','12456789','13456789','23456789',
+            '123456789','123456798','123456879','123456897','123456978'
+        ];
+
+        // ------------------------------------------------------------
+        // Cálculo de probabilidades
+        // ------------------------------------------------------------
+        function computeProbabilities(list) {
+            const n = list.length;
+            const weights = list.map((_, i) => 1 / Math.pow(i + 1, 0.8));
+            const sum = weights.reduce((a, b) => a + b, 0);
+            return weights.map(w => (w / sum) * 100);
+        }
+
+        const probsShort = computeProbabilities(SHORT_PATTERNS);
+        const probsLong = computeProbabilities(LONG_PATTERNS);
+
+        // ------------------------------------------------------------
+        // Dibujado de patrones en canvas
+        // ------------------------------------------------------------
+        function drawPattern(canvas, pattern, tested) {
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width;
+            const margin = size * 0.15;
+            const dotRadius = size * 0.07;
+            const lineWidth = size * 0.05;
+
+            // Limpiar
+            ctx.clearRect(0, 0, size, size);
+
+            // Fondo (ya lo tiene el canvas por CSS, pero pintamos para consistencia)
+            ctx.fillStyle = '#0f1620';
+            ctx.fillRect(0, 0, size, size);
+
+            // Mapear dígitos 1-9 a coordenadas (3x3)
+            const pos = {};
+            for (let i = 1; i <= 9; i++) {
+                const row = Math.floor((i - 1) / 3);
+                const col = (i - 1) % 3;
+                const x = margin + col * (size - 2 * margin) / 2;
+                const y = margin + row * (size - 2 * margin) / 2;
+                pos[i] = { x, y };
+            }
+
+            // Si el patrón está probado, usamos colores más apagados
+            const color = tested ? '#445566' : '#00d4ff';
+            const glowColor = tested ? 'transparent' : 'rgba(0, 212, 255, 0.3)';
+
+            // Dibujar líneas (en orden)
+            const points = pattern.split('').map(Number);
+            if (points.length < 2) return;
+
+            ctx.beginPath();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = lineWidth;
+            ctx.shadowColor = glowColor;
+            ctx.shadowBlur = tested ? 0 : 8;
+            ctx.moveTo(pos[points[0]].x, pos[points[0]].y);
+            for (let i = 1; i < points.length; i++) {
+                ctx.lineTo(pos[points[i]].x, pos[points[i]].y);
+            }
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+
+            // Dibujar puntos (círculos)
+            for (let i = 0; i < points.length; i++) {
+                const p = pos[points[i]];
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, dotRadius, 0, 2 * Math.PI);
+                ctx.fillStyle = color;
+                ctx.shadowColor = glowColor;
+                ctx.shadowBlur = tested ? 0 : 12;
+                ctx.fill();
+                // Borde interior (opcional)
+                ctx.shadowBlur = 0;
+                ctx.strokeStyle = '#0f1620';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+            }
+
+            // Si está probado, dibujamos un tachado sutil (opcional)
+            if (tested) {
+                ctx.strokeStyle = '#667';
+                ctx.lineWidth = 2;
+                ctx.shadowBlur = 0;
+                ctx.setLineDash([4, 4]);
+                ctx.beginPath();
+                ctx.moveTo(margin, margin);
+                ctx.lineTo(size - margin, size - margin);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+        }
+
+        // ------------------------------------------------------------
+        // ESTADO (localStorage)
+        // ------------------------------------------------------------
+        const STORAGE_KEY = 'patternGraphicTracker';
+
+        function loadState() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try { return JSON.parse(stored); } catch (e) { return null; }
+            }
+            return null;
+        }
+
+        function saveState(state) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+
+        function initState() {
+            const existing = loadState();
+            if (existing && typeof existing === 'object') {
+                let modified = false;
+                [SHORT_PATTERNS, LONG_PATTERNS].forEach((list, idx) => {
+                    const key = idx === 0 ? 'short' : 'long';
+                    if (!existing[key]) { existing[key] = {}; modified = true; }
+                    list.forEach(p => {
+                        if (!(p in existing[key])) {
+                            existing[key][p] = false;
+                            modified = true;
+                        }
+                    });
+                });
+                if (modified) saveState(existing);
+                return existing;
+            } else {
+                const fresh = { 'short': {}, 'long': {} };
+                SHORT_PATTERNS.forEach(p => fresh['short'][p] = false);
+                LONG_PATTERNS.forEach(p => fresh['long'][p] = false);
+                saveState(fresh);
+                return fresh;
+            }
+        }
+
+        let state = initState();
+
+        // ------------------------------------------------------------
+        // RENDER
+        // ------------------------------------------------------------
+        function render() {
+            renderGrid('short', SHORT_PATTERNS, probsShort);
+            renderGrid('long', LONG_PATTERNS, probsLong);
+            updateStats();
+        }
+
+        function renderGrid(type, list, probs) {
+            const container = document.getElementById(type === 'short' ? 'gridShort' : 'gridLong');
+            const badge = document.getElementById(type === 'short' ? 'badgeShort' : 'badgeLong');
+            if (!container) return;
+
+            const patternState = state[type] || {};
+            let pending = 0;
+            list.forEach(p => { if (!patternState[p]) pending++; });
+            badge.textContent = pending + ' pendientes';
+
+            let html = '';
+            list.forEach((pattern, index) => {
+                const tested = patternState[pattern] || false;
+                const prob = probs[index];
+                const probStr = prob.toFixed(2) + '%';
+                const length = pattern.length;
+                const classes = 'pattern-card' + (tested ? ' tested' : '');
+                // Usamos un canvas con id único para dibujar después
+                const canvasId = 'canvas-' + type + '-' + index;
+                html += `<div class="${classes}" data-type="${type}" data-pattern="${pattern}">
+                            <canvas id="${canvasId}" width="80" height="80"></canvas>
+                            <div class="pattern-info">
+                                <span class="pattern-length">${length} puntos</span>
+                                <span class="probability">${probStr}</span>
+                            </div>
+                        </div>`;
+            });
+            container.innerHTML = html;
+
+            // Dibujar cada canvas después de insertarlos
+            list.forEach((pattern, index) => {
+                const canvasId = 'canvas-' + type + '-' + index;
+                const canvas = document.getElementById(canvasId);
+                if (canvas) {
+                    const tested = patternState[pattern] || false;
+                    drawPattern(canvas, pattern, tested);
+                }
+            });
+
+            // Eventos click
+            container.querySelectorAll('.pattern-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    const typeAttr = this.dataset.type;
+                    const pattern = this.dataset.pattern;
+                    togglePattern(typeAttr, pattern);
+                });
+            });
+        }
+
+        function togglePattern(type, pattern) {
+            state[type][pattern] = !state[type][pattern];
+            saveState(state);
+            render();
+        }
+
+        function updateStats() {
+            const totalShort = SHORT_PATTERNS.length;
+            const totalLong = LONG_PATTERNS.length;
+            const total = totalShort + totalLong;
+            let testedShort = 0, testedLong = 0;
+            SHORT_PATTERNS.forEach(p => { if (state['short'][p]) testedShort++; });
+            LONG_PATTERNS.forEach(p => { if (state['long'][p]) testedLong++; });
+            const testedTotal = testedShort + testedLong;
+            const pendingTotal = total - testedTotal;
+
+            document.getElementById('pendingCount').textContent = pendingTotal;
+            document.getElementById('testedCount').textContent = testedTotal;
+            document.getElementById('totalCount').textContent = total;
+        }
+
+        // ------------------------------------------------------------
+        // RESET
+        // ------------------------------------------------------------
+        function resetAll() {
+            if (!confirm('¿Marcar todos los patrones como NO probados?')) return;
+            SHORT_PATTERNS.forEach(p => state['short'][p] = false);
+            LONG_PATTERNS.forEach(p => state['long'][p] = false);
+            saveState(state);
+            render();
+        }
+
+        // ------------------------------------------------------------
+        // INICIO
+        // ------------------------------------------------------------
+        document.addEventListener('DOMContentLoaded', function() {
+            render();
+            document.getElementById('resetBtn').addEventListener('click', resetAll);
+        });
+
+        window.addEventListener('beforeunload', function() {
+            saveState(state);
+        });
+    })();
+</script>
+</body>
+</html>
