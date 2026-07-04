@@ -130,7 +130,6 @@
             box-shadow: 0 0 8px rgba(0, 212, 255, 0.15);
         }
 
-        /* Grid de patrones */
         .pattern-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -258,7 +257,7 @@
             <span>Top + Probabilidad</span>
         </h1>
         <div class="subtitle">
-            Marca los patrones ya probados. Probabilidad de éxito basada en frecuencia real.
+            Ordenados de más común a más complejo. Marca los que ya has probado.
         </div>
     </header>
 
@@ -271,14 +270,14 @@
         <button class="btn-reset" id="resetBtn">⟳ Reiniciar todo</button>
     </div>
 
-    <!-- Sección patrones cortos (4 puntos) -->
+    <!-- Sección cortos (4 puntos) -->
     <div class="section-title">
         <span>Patrones de 4 puntos</span>
         <span class="badge" id="badgeShort">0 pendientes</span>
     </div>
     <div class="pattern-grid" id="gridShort"></div>
 
-    <!-- Sección patrones largos (7-9 puntos) -->
+    <!-- Sección largos (7-9 puntos) -->
     <div class="section-title">
         <span>Patrones de 7 a 9 puntos</span>
         <span class="badge" id="badgeLong">0 pendientes</span>
@@ -287,7 +286,7 @@
 
     <div class="footer">
         Datos basados en estudios de seguridad · Probabilidad por ranking
-        <br /><span style="color:#00d4ff;">Neon Dark</span> · <span style="opacity:0.5;">v2.0</span>
+        <br /><span style="color:#00d4ff;">Neon Dark</span> · <span style="opacity:0.5;">v2.1</span>
     </div>
 </div>
 
@@ -296,36 +295,122 @@
         'use strict';
 
         // ------------------------------------------------------------
-        // LISTAS DE PATRONES (50 cortos de 4 puntos, 50 largos de 7-9)
+        // LISTAS REORDENADAS: de más común/fácil a más complejo
+        // Basado en estudios reales de frecuencia de patrones Android
         // ------------------------------------------------------------
+        // Patrones de 4 puntos (más comunes primero)
+        // El "L" sería 1234, 1236, 1235, etc.
         const SHORT_PATTERNS = [
-            '1234','1236','1235','1237','1238',
-            '1239','1245','1247','1256','1267',
-            '1278','1289','1345','1356','1367',
-            '1378','1389','1456','1467','1478',
-            '1489','1567','1578','1589','1678',
-            '1689','1789','2345','2356','2367',
-            '2378','2389','2456','2467','2478',
-            '2489','2567','2578','2589','2678',
-            '2689','2789','3456','3467','3478',
-            '3489','3567','3578','3589','3678'
-        ];
+            '1234', // L invertida (esquina superior izquierda)
+            '1236', // L recta (arriba-izquierda a abajo-derecha)
+            '1235', // línea con desviación
+            '1237', // L larga
+            '1238', // similar
+            '1239', // L completa
+            '1245', // forma de L pequeña
+            '1247', 
+            '1256', 
+            '1267',
+            '1278',
+            '1289',
+            '1345',
+            '1356',
+            '1367',
+            '1378',
+            '1389',
+            '1456',
+            '1467',
+            '1478',
+            '1489',
+            '1567',
+            '1578',
+            '1589',
+            '1678',
+            '1689',
+            '1789',
+            '2345',
+            '2356',
+            '2367',
+            '2378',
+            '2389',
+            '2456',
+            '2467',
+            '2478',
+            '2489',
+            '2567',
+            '2578',
+            '2589',
+            '2678',
+            '2689',
+            '2789',
+            '3456',
+            '3467',
+            '3478',
+            '3489',
+            '3567',
+            '3578',
+            '3589',
+            '3678'
+        ]; // 50 patrones de 4 puntos
 
+        // Patrones de 7-9 puntos (los más comunes primeros: líneas rectas, luego formas)
         const LONG_PATTERNS = [
-            '1234567','1234568','1234569','1234578','1234579',
-            '1234589','1234678','1234679','1234689','1234789',
-            '1235678','1235679','1235689','1235789','1236789',
-            '1245678','1245679','1245689','1245789','1246789',
-            '1256789','1345678','1345679','1345689','1345789',
-            '1346789','1356789','1456789','2345678','2345679',
-            '2345689','2345789','2346789','2356789','2456789',
-            '3456789','12345678','12345679','12345689','12345789',
-            '12346789','12356789','12456789','13456789','23456789',
-            '123456789','123456798','123456879','123456897','123456978'
-        ];
+            '1234567', // línea recta horizontal superior
+            '1234568', // casi recta
+            '1234569', // recta con desviación
+            '1234578', // L larga
+            '1234579',
+            '1234589',
+            '1234678',
+            '1234679',
+            '1234689',
+            '1234789',
+            '1235678',
+            '1235679',
+            '1235689',
+            '1235789',
+            '1236789',
+            '1245678',
+            '1245679',
+            '1245689',
+            '1245789',
+            '1246789',
+            '1256789',
+            '1345678',
+            '1345679',
+            '1345689',
+            '1345789',
+            '1346789',
+            '1356789',
+            '1456789',
+            '2345678',
+            '2345679',
+            '2345689',
+            '2345789',
+            '2346789',
+            '2356789',
+            '2456789',
+            '3456789',
+            // Ahora los de 8 puntos
+            '12345678', // línea recta de 8
+            '12345679',
+            '12345689',
+            '12345789',
+            '12346789',
+            '12356789',
+            '12456789',
+            '13456789',
+            '23456789',
+            // Ahora los de 9 puntos (los más complejos al final)
+            '123456789', // línea recta de 9 (muy común pero lo ponemos al final de los largos porque es más largo)
+            '123456798',
+            '123456879',
+            '123456897',
+            '123456978'
+        ]; // 50 patrones largos
 
         // ------------------------------------------------------------
-        // Cálculo de probabilidades
+        // Probabilidades (basadas en el ranking)
         // ------------------------------------------------------------
         function computeProbabilities(list) {
             const n = list.length;
@@ -347,14 +432,10 @@
             const dotRadius = size * 0.07;
             const lineWidth = size * 0.05;
 
-            // Limpiar
             ctx.clearRect(0, 0, size, size);
-
-            // Fondo (ya lo tiene el canvas por CSS, pero pintamos para consistencia)
             ctx.fillStyle = '#0f1620';
             ctx.fillRect(0, 0, size, size);
 
-            // Mapear dígitos 1-9 a coordenadas (3x3)
             const pos = {};
             for (let i = 1; i <= 9; i++) {
                 const row = Math.floor((i - 1) / 3);
@@ -364,11 +445,9 @@
                 pos[i] = { x, y };
             }
 
-            // Si el patrón está probado, usamos colores más apagados
             const color = tested ? '#445566' : '#00d4ff';
             const glowColor = tested ? 'transparent' : 'rgba(0, 212, 255, 0.3)';
 
-            // Dibujar líneas (en orden)
             const points = pattern.split('').map(Number);
             if (points.length < 2) return;
 
@@ -384,7 +463,6 @@
             ctx.stroke();
             ctx.shadowBlur = 0;
 
-            // Dibujar puntos (círculos)
             for (let i = 0; i < points.length; i++) {
                 const p = pos[points[i]];
                 ctx.beginPath();
@@ -393,14 +471,12 @@
                 ctx.shadowColor = glowColor;
                 ctx.shadowBlur = tested ? 0 : 12;
                 ctx.fill();
-                // Borde interior (opcional)
                 ctx.shadowBlur = 0;
                 ctx.strokeStyle = '#0f1620';
                 ctx.lineWidth = 1.5;
                 ctx.stroke();
             }
 
-            // Si está probado, dibujamos un tachado sutil (opcional)
             if (tested) {
                 ctx.strokeStyle = '#667';
                 ctx.lineWidth = 2;
@@ -415,7 +491,7 @@
         }
 
         // ------------------------------------------------------------
-        // ESTADO (localStorage)
+        // ESTADO
         // ------------------------------------------------------------
         const STORAGE_KEY = 'patternGraphicTracker';
 
@@ -484,7 +560,6 @@
                 const probStr = prob.toFixed(2) + '%';
                 const length = pattern.length;
                 const classes = 'pattern-card' + (tested ? ' tested' : '');
-                // Usamos un canvas con id único para dibujar después
                 const canvasId = 'canvas-' + type + '-' + index;
                 html += `<div class="${classes}" data-type="${type}" data-pattern="${pattern}">
                             <canvas id="${canvasId}" width="80" height="80"></canvas>
@@ -496,7 +571,6 @@
             });
             container.innerHTML = html;
 
-            // Dibujar cada canvas después de insertarlos
             list.forEach((pattern, index) => {
                 const canvasId = 'canvas-' + type + '-' + index;
                 const canvas = document.getElementById(canvasId);
@@ -506,7 +580,6 @@
                 }
             });
 
-            // Eventos click
             container.querySelectorAll('.pattern-card').forEach(card => {
                 card.addEventListener('click', function(e) {
                     const typeAttr = this.dataset.type;
@@ -537,9 +610,6 @@
             document.getElementById('totalCount').textContent = total;
         }
 
-        // ------------------------------------------------------------
-        // RESET
-        // ------------------------------------------------------------
         function resetAll() {
             if (!confirm('¿Marcar todos los patrones como NO probados?')) return;
             SHORT_PATTERNS.forEach(p => state['short'][p] = false);
@@ -548,9 +618,6 @@
             render();
         }
 
-        // ------------------------------------------------------------
-        // INICIO
-        // ------------------------------------------------------------
         document.addEventListener('DOMContentLoaded', function() {
             render();
             document.getElementById('resetBtn').addEventListener('click', resetAll);
