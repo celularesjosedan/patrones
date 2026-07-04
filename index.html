@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Control de Patrones · Neon Dark</title>
+    <title>Control de PATRONES · Probabilidad de éxito</title>
     <style>
+        /* Reset & base */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -12,20 +13,20 @@
         }
         body {
             font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
-            background: #0b0f1a;
-            color: #e0e8f0;
+            background: #f5f7fb;
+            color: #1e293b;
             padding: 1.5rem;
             min-height: 100vh;
             display: flex;
             justify-content: center;
         }
         .container {
-            max-width: 1400px;
+            max-width: 1300px;
             width: 100%;
-            background: #141a26;
-            border-radius: 1.8rem;
+            background: white;
+            border-radius: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
             padding: 2rem 2rem 2.5rem;
-            border: 1px solid #2a3344;
         }
         h1 {
             font-size: 2.4rem;
@@ -35,38 +36,33 @@
             align-items: center;
             gap: 0.8rem;
             flex-wrap: wrap;
-            color: #f0f4ff;
         }
         h1 span {
-            background: #1f2a3a;
-            color: #00f0c0;
+            background: #eef2ff;
+            color: #4f46e5;
             font-size: 1rem;
             font-weight: 600;
             padding: 0.2rem 1.2rem;
             border-radius: 40px;
-            border: 1px solid #00f0c0;
-            box-shadow: 0 0 8px rgba(0, 240, 192, 0.2);
         }
         .subtitle {
-            color: #a0b4cc;
+            color: #64748b;
             margin-top: 0.3rem;
             margin-bottom: 2rem;
             font-size: 1.05rem;
-            border-left: 4px solid #00d4ff;
+            border-left: 4px solid #818cf8;
             padding-left: 1rem;
-            background: linear-gradient(90deg, rgba(0,212,255,0.08) 0%, transparent 80%);
         }
         .stats-grid {
             display: flex;
             flex-wrap: wrap;
             gap: 1.2rem 2.5rem;
-            background: #10161f;
+            background: #f8fafc;
             padding: 1.2rem 1.8rem;
             border-radius: 1.2rem;
             margin-bottom: 2.2rem;
             align-items: center;
             justify-content: space-between;
-            border: 1px solid #2a3344;
         }
         .stats {
             display: flex;
@@ -80,177 +76,193 @@
         }
         .stat-item .label {
             font-weight: 500;
-            color: #8899bb;
+            color: #475569;
         }
         .stat-item .value {
             font-weight: 700;
             font-size: 1.4rem;
-            color: #f0f4ff;
+            color: #0f172a;
         }
-        .stat-item .value.pending { color: #ff6b6b; }
-        .stat-item .value.tested { color: #00f0a0; }
+        .stat-item .value.pending { color: #dc2626; }
+        .stat-item .value.tested { color: #16a34a; }
         .btn-reset {
-            background: #2a1f2f;
-            color: #ff7b9c;
-            border: 1px solid #ff7b9c;
+            background: #fee2e2;
+            color: #b91c1c;
+            border: none;
             padding: 0.5rem 1.6rem;
             border-radius: 40px;
             font-weight: 600;
             font-size: 0.9rem;
             cursor: pointer;
-            transition: background 0.1s, color 0.1s;
+            transition: 0.2s;
             display: inline-flex;
             align-items: center;
             gap: 0.4rem;
-            box-shadow: 0 0 12px rgba(255, 123, 156, 0.15);
         }
-        .btn-reset:hover {
-            background: #ff7b9c;
-            color: #141a26;
-        }
+        .btn-reset:hover { background: #fecaca; transform: scale(1.02); }
+        .btn-reset:active { transform: scale(0.97); }
 
         .section-title {
             font-size: 1.6rem;
             font-weight: 600;
-            margin: 2rem 0 1rem;
+            margin: 2rem 0 0.4rem;
             display: flex;
             align-items: center;
             gap: 0.8rem;
-            color: #d0dcf0;
         }
         .section-title .badge {
-            background: #1f2a3a;
+            background: #e2e8f0;
             padding: 0.1rem 1rem;
             border-radius: 30px;
             font-size: 0.9rem;
             font-weight: 500;
-            color: #00d4ff;
-            border: 1px solid #00d4ff;
-            box-shadow: 0 0 8px rgba(0, 212, 255, 0.15);
+            color: #334155;
         }
-        .section-title .complexity-badge {
-            font-size: 0.75rem;
-            color: #8899bb;
-            font-weight: 400;
-            margin-left: 0.5rem;
+        .section-desc {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
         }
 
-        .pattern-grid {
+        /* Grid de patrones */
+        .pin-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 0.8rem;
             margin-bottom: 0.8rem;
         }
 
-        .pattern-card {
-            background: #1a2230;
-            border: 2px solid #2a3346;
+        .pin-card {
+            background: #ffffff;
+            border: 2px solid #e9edf2;
             border-radius: 1rem;
-            padding: 0.6rem 0.2rem;
+            padding: 0.7rem 0.5rem 0.6rem;
             text-align: center;
             cursor: pointer;
+            transition: all 0.15s ease;
             user-select: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 150px;
-            transition: background 0.1s, border-color 0.1s, opacity 0.1s;
-            position: relative;
+            gap: 0.35rem;
         }
-        .pattern-card canvas {
-            display: block;
-            width: 80px;
-            height: 80px;
-            border-radius: 8px;
-            background: #0f1620;
-            border: 1px solid #2a3344;
-            margin-bottom: 4px;
+        .pin-card .pattern-label {
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.5px;
+            color: #334155;
         }
-        .pattern-card .pattern-info {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-        }
-        .pattern-card .pattern-length {
-            font-size: 0.55rem;
-            color: #8899bb;
-            opacity: 0.6;
-        }
-        .pattern-card .probability {
+        .pin-card .probability {
             font-size: 0.7rem;
-            color: #00ffaa;
-            background: #0f1620;
+            color: #64748b;
+            background: #f1f5f9;
             padding: 0.1rem 0.5rem;
             border-radius: 20px;
-            font-weight: 600;
-            border: 1px solid #00ffaa;
-            box-shadow: 0 0 12px rgba(0, 255, 170, 0.2);
-            text-shadow: 0 0 6px rgba(0,255,170,0.4);
+            font-weight: 500;
+            transition: 0.2s;
         }
-        .pattern-card:hover:not(.tested) {
-            background: #1f2a3a;
-            border-color: #00d4ff;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+        .pin-card:hover:not(.tested) {
+            border-color: #a5b4fc;
+            background: #f8faff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(79,70,229,0.08);
         }
-        .pattern-card.tested {
-            background: #111822;
-            border-color: #2a3344;
-            opacity: 0.6;
+        .pin-card.tested {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            color: #94a3b8;
             cursor: default;
-        }
-        .pattern-card.tested canvas {
-            opacity: 0.5;
-            filter: grayscale(0.8);
-        }
-        .pattern-card.tested .probability {
-            background: #0a0f16;
-            color: #445566;
-            border-color: #2a3344;
+            opacity: 0.7;
+            transform: none;
             box-shadow: none;
-            text-shadow: none;
         }
-        .pattern-card.tested::after {
+        .pin-card.tested .pattern-label {
+            text-decoration: line-through;
+            text-decoration-color: #94a3b8;
+            text-decoration-thickness: 2px;
+            color: #94a3b8;
+        }
+        .pin-card.tested .probability {
+            background: #e2e8f0;
+            color: #94a3b8;
+        }
+        .pin-card.tested svg .dot { fill: #cbd5e1 !important; }
+        .pin-card.tested svg .dot-outer { stroke: #cbd5e1 !important; }
+        .pin-card.tested svg .line { stroke: #cbd5e1 !important; }
+        .pin-card.tested::after {
             content: "✓";
             position: absolute;
             top: 4px;
             right: 8px;
             font-size: 1.2rem;
-            color: #00f0a0;
+            color: #22c55e;
             font-weight: 700;
-            text-shadow: 0 0 10px rgba(0, 240, 160, 0.3);
+        }
+
+        .pattern-svg {
+            width: 90px;
+            height: 90px;
+        }
+        .pattern-svg .dot-outer {
+            fill: white;
+            stroke: #cbd5e1;
+            stroke-width: 2;
+        }
+        .pattern-svg .dot {
+            fill: #94a3b8;
+        }
+        .pattern-svg .dot.active {
+            fill: #4f46e5;
+        }
+        .pattern-svg .line {
+            stroke: #4f46e5;
+            stroke-width: 4;
+            stroke-linecap: round;
+            fill: none;
+        }
+        .pattern-svg .start-dot {
+            fill: #16a34a;
+        }
+        .pattern-svg .end-dot {
+            fill: #dc2626;
+        }
+
+        .empty-message {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: #94a3b8;
+            padding: 2rem 0;
+            font-style: italic;
         }
 
         .footer {
             margin-top: 3rem;
             padding-top: 1.5rem;
-            border-top: 1px solid #2a3344;
+            border-top: 1px solid #e2e8f0;
             font-size: 0.85rem;
-            color: #668;
+            color: #94a3b8;
             text-align: center;
         }
         .footer a {
-            color: #00d4ff;
+            color: #4f46e5;
             text-decoration: none;
         }
-        .footer a:hover {
-            text-decoration: underline;
-            color: #00f0c0;
-        }
+        .footer a:hover { text-decoration: underline; }
 
         @media (max-width: 640px) {
             .container { padding: 1.2rem; }
             h1 { font-size: 1.8rem; }
             .stats-grid { flex-direction: column; align-items: stretch; gap: 0.8rem; }
             .stats { justify-content: space-between; }
-            .pattern-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
-            .pattern-card { min-height: 120px; padding: 0.4rem 0.1rem; }
-            .pattern-card canvas { width: 60px; height: 60px; }
+            .pin-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+            .pattern-svg { width: 70px; height: 70px; }
         }
         @media (max-width: 400px) {
-            .pattern-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); }
-            .pattern-card canvas { width: 50px; height: 50px; }
+            .pin-grid { grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); }
         }
     </style>
 </head>
@@ -258,14 +270,11 @@
 <div class="container" id="app">
     <header>
         <h1>
-            🔐 Control de Patrones
-            <span>Top mundial + Probabilidad</span>
+            🔓 Control de PATRONES
+            <span>Letras + Comunes + Complejos</span>
         </h1>
         <div class="subtitle">
-            Marca los patrones ya probados. Ordenados de más fáciles a más complejos.
-            <span style="color:#00d4ff;display:block;font-size:0.9rem;margin-top:4px;">
-                ⬅️ Letras (L, S, M, W, C, O, G, J, P...) → Patrones simples → Patrones complejos ➡️
-            </span>
+            Marca los patrones (grilla 3x3 tipo Android) que ya has probado. Ordenados de más fáciles/comunes (letras del abecedario) a más complejos.
         </div>
     </header>
 
@@ -275,36 +284,37 @@
             <div class="stat-item"><span class="label">✅ Probados:</span><span class="value tested" id="testedCount">0</span></div>
             <div class="stat-item"><span class="label">📊 Total:</span><span class="value" id="totalCount">0</span></div>
         </div>
-        <button class="btn-reset" id="resetBtn">⟳ Reiniciar todo</button>
+        <button class="btn-reset" id="resetBtn">🔄 Reiniciar todo</button>
     </div>
 
-    <!-- Sección: Patrones con forma de letra -->
+    <!-- Sección Letras -->
     <div class="section-title">
-        <span>🔤 Patrones con forma de letra</span>
-        <span class="badge" id="badgeLetters">0 pendientes</span>
-        <span class="complexity-badge">• Los más fáciles de recordar</span>
+        <span>🔤 Letras del abecedario</span>
+        <span class="badge" id="badgeLetras">0 pendientes</span>
     </div>
-    <div class="pattern-grid" id="gridLetters"></div>
+    <div class="section-desc">Los patrones más usados: forman una letra reconocible (L, Z, S, M, W, N, C, U, V...). Son los primeros que la gente prueba.</div>
+    <div class="pin-grid" id="gridLetras"></div>
 
-    <!-- Sección: Patrones simples -->
+    <!-- Sección Comunes -->
     <div class="section-title">
-        <span>📐 Patrones simples</span>
-        <span class="badge" id="badgeSimple">0 pendientes</span>
-        <span class="complexity-badge">• 4-5 puntos, formas básicas</span>
+        <span>⭐ Comunes</span>
+        <span class="badge" id="badgeComunes">0 pendientes</span>
     </div>
-    <div class="pattern-grid" id="gridSimple"></div>
+    <div class="section-desc">Patrones simples y simétricos: esquinas, líneas rectas, zigzags cortos. Muy frecuentes en dispositivos reales.</div>
+    <div class="pin-grid" id="gridComunes"></div>
 
-    <!-- Sección: Patrones complejos -->
+    <!-- Sección Complejos -->
     <div class="section-title">
-        <span>🧩 Patrones complejos</span>
-        <span class="badge" id="badgeComplex">0 pendientes</span>
-        <span class="complexity-badge">• 6-9 puntos, mayor seguridad</span>
+        <span>🧩 Complejos</span>
+        <span class="badge" id="badgeComplejos">0 pendientes</span>
     </div>
-    <div class="pattern-grid" id="gridComplex"></div>
+    <div class="section-desc">Patrones largos (7-9 puntos) con cruces y giros. Menos comunes pero posibles en usuarios más cuidadosos.</div>
+    <div class="pin-grid" id="gridComplejos"></div>
 
     <div class="footer">
-        Datos basados en estudios de seguridad y filtraciones reales · Probabilidad por ranking
-        <br /><span style="color:#00d4ff;">Neon Dark</span> · <span style="opacity:0.5;">v3.1</span>
+        Probabilidad estimada a partir de estudios de seguridad sobre patrones de desbloqueo Android (frecuencia de uso real).
+        <br />Grilla estándar 3x3 — el punto verde marca el inicio y el rojo el final del trazo.
+        <br /><span style="opacity:0.6;">v1.0 — Patrones</span>
     </div>
 </div>
 
@@ -313,178 +323,123 @@
         'use strict';
 
         // ------------------------------------------------------------
-        // PATRONES ORGANIZADOS POR COMPLEJIDAD
+        // COORDENADAS DE LA GRILLA 3x3 (estilo Android)
+        // Puntos numerados 1-9:
+        //   1 2 3
+        //   4 5 6
+        //   7 8 9
         // ------------------------------------------------------------
-
-        // === GRUPO 1: LETRAS (más fáciles, ~15% de usuarios) ===
-        // Incluye L, Z, S, M, W, C, O, N, U, V, X, T, G, J, P, R, Y
-        const LETTER_PATTERNS = [
-            // L (la más común)
-            '1478', '1235',
-            // Z
-            '1235789', '14789',
-            // S
-            '1236987', '1236547',
-            // M
-            '147456789', '123456789',
-            // W
-            '123654789', '147852369',
-            // C
-            '12369874', '12365478',
-            // O
-            '123698741', '123654789',
-            // N
-            '1478963',
-            // U
-            '1236987',
-            // V
-            '14789',
-            // X
-            '159357',
-            // T
-            '123698',
-            // G (nuevo)
-            '1236987',  // G mayúscula
-            '1236547',  // G variante
-            // J (nuevo)
-            '123698',   // J
-            '123654',   // J variante
-            // P (nuevo)
-            '123654',   // P
-            '123698',   // P variante
-            // R (nuevo)
-            '1236987',  // R
-            // Y (nuevo)
-            '14789',    // Y
-            '1236987',  // Y variante
-        ];
-
-        // Limpiar duplicados (mantener el orden)
-        const uniqueLetters = [...new Set(LETTER_PATTERNS)];
-        const letterList = uniqueLetters.slice(0, 50); // máximo 50
-
-        // === GRUPO 2: PATRONES SIMPLES (4-5 puntos) ===
-        const SIMPLE_PATTERNS = [
-            '1236','1234','1235','1237','1238',
-            '1239','1245','1247','1256','1267',
-            '1278','1289','1345','1356','1367',
-            '1378','1389','1456','1467','1478',
-            '1489','1567','1578','1589','1678',
-            '1689','1789','2345','2356','2367',
-            '2378','2389','2456','2467','2478',
-            '2489','2567','2578','2589','2678',
-            '2689','2789','3456','3467','3478',
-            '3489','3567','3578','3589','3678'
-        ];
-        const simpleList = SIMPLE_PATTERNS.slice(0, 50);
-
-        // === GRUPO 3: PATRONES COMPLEJOS (6-9 puntos) ===
-        const COMPLEX_PATTERNS = [
-            '123456','123457','123458','123459','123467',
-            '123468','123478','123567','123568','123578',
-            '123678','124567','124568','124578','124678',
-            '125678','134567','134568','134578','134678',
-            '135678','145678','234567','234568','234578',
-            '234678','235678','245678','345678',
-            '1234567','1234568','1234569','1234578','1234579',
-            '1234589','1234678','1234679','1234689','1234789',
-            '1235678','1235679','1235689','1235789','1236789',
-            '1245678','1245679','1245689','1245789','1246789',
-            '1256789','1345678','1345679','1345689','1345789',
-            '1346789','1356789','1456789','2345678','2345679',
-            '2345689','2345789','2346789','2356789','2456789',
-            '3456789','12345678','12345679','12345689','12345789',
-            '12346789','12356789','12456789','13456789','23456789',
-            '123456789'
-        ];
-        const complexList = COMPLEX_PATTERNS.slice(0, 50);
+        const COORDS = {
+            1: [20, 20], 2: [50, 20], 3: [80, 20],
+            4: [20, 50], 5: [50, 50], 6: [80, 50],
+            7: [20, 80], 8: [50, 80], 9: [80, 80]
+        };
 
         // ------------------------------------------------------------
-        // Cálculo de probabilidades (basado en ranking)
+        // LISTAS DE PATRONES POR CATEGORÍA
+        // Cada patrón es un array de nodos (1-9) representando el trazo.
+        // Ordenados de más comunes/fáciles a menos comunes dentro de cada categoría.
         // ------------------------------------------------------------
-        function computeProbabilities(list) {
+
+        // 1) LETRAS DEL ABECEDARIO — los patrones "de forma" más adivinados
+        const PATTERNS_LETRAS = [
+            { label: 'L',  path: [1,4,7,8,9] },
+            { label: 'Z',  path: [1,2,3,5,7,8,9] },
+            { label: 'S',  path: [3,2,1,4,5,6,9,8,7] },
+            { label: 'M',  path: [7,4,1,5,3,6,9] },
+            { label: 'W',  path: [1,4,7,5,3,6,9] },
+            { label: 'N',  path: [7,4,1,5,9,6,3] },
+            { label: 'C',  path: [3,2,1,4,7,8,9] },
+            { label: 'U',  path: [1,4,7,8,9,6,3] },
+            { label: 'V',  path: [1,4,7,8,9,5,3] },
+            { label: 'I',  path: [2,5,8] },
+            { label: 'T',  path: [1,2,3,5,8] },
+            { label: 'J',  path: [2,3,6,9,8,7] },
+            { label: 'F',  path: [7,4,1,2,3,5] },
+            { label: 'E',  path: [3,2,1,4,7,8,9] },
+            { label: 'X',  path: [1,5,9,6,3] },
+            { label: 'O',  path: [1,2,3,6,9,8,7,4] },
+            { label: 'Y',  path: [1,5,3,6,9] },
+            { label: 'H',  path: [1,4,7,4,5,6,3,6,9] },
+            { label: 'K',  path: [7,4,1,5,3,6,9] },
+            { label: 'P',  path: [7,4,1,2,3,6,5] }
+        ];
+
+        // 2) PATRONES COMUNES — simples, simétricos, muy usados
+        const PATTERNS_COMUNES = [
+            { label: 'Esquinas ↘',        path: [1,5,9] },
+            { label: 'Esquinas ↙',        path: [3,5,7] },
+            { label: 'Fila superior',     path: [1,2,3] },
+            { label: 'Fila inferior',     path: [7,8,9] },
+            { label: 'Columna izq.',      path: [1,4,7] },
+            { label: 'Columna der.',      path: [3,6,9] },
+            { label: 'Diagonal completa', path: [1,5,9,6,3] },
+            { label: 'Cuadro perímetro',  path: [1,2,3,6,9,8,7,4] },
+            { label: 'Cruz +',            path: [2,4,5,6,8] },
+            { label: 'Zigzag corto',      path: [1,5,3,6,9] },
+            { label: 'Z invertida',       path: [3,2,1,5,7,8,9] },
+            { label: 'Flecha ↑',          path: [7,4,1,5,3] },
+            { label: 'Flecha ↓',          path: [1,4,7,5,9] },
+            { label: 'Rombo',             path: [2,4,6,8] },
+            { label: 'Escalera',          path: [1,4,5,8,9] },
+            { label: 'Doble L',           path: [3,6,9,8,7,4,1] },
+            { label: 'Peine',             path: [1,4,7,8,5,2,3,6,9] },
+            { label: '4 esquinas',        path: [1,3,9,7] },
+            { label: 'Medio cuadro',      path: [1,2,3,6,9] },
+            { label: 'Triángulo',         path: [1,9,3,1] }
+        ];
+
+        // 3) PATRONES COMPLEJOS — largos, con cruces y giros (7-9 nodos)
+        const PATTERNS_COMPLEJOS = [
+            { label: 'Serpiente',         path: [1,2,3,6,5,4,7,8,9] },
+            { label: 'Doble zigzag',      path: [1,5,3,2,6,4,7,8,9] },
+            { label: 'Espiral',           path: [1,2,3,6,9,8,7,4,5] },
+            { label: 'Reloj de arena',    path: [1,3,5,7,9] },
+            { label: 'Mariposa',          path: [7,5,3,1,5,9,7] },
+            { label: 'Estrella',          path: [1,6,7,2,9,4,3] },
+            { label: 'Cremallera',        path: [4,1,5,2,6,3,9] },
+            { label: 'Nudo central',      path: [1,5,9,4,8,7,5,3] },
+            { label: 'Bumerán',           path: [3,2,1,4,7,8,9,6,5] },
+            { label: 'Escalera doble',    path: [7,4,1,2,5,8,9,6,3] },
+            { label: 'Ola',               path: [1,4,7,5,3,6,9,8] },
+            { label: 'Trenza',            path: [1,6,5,4,9,2,7] },
+            { label: 'Cruz rotada',       path: [2,7,5,3,8] },
+            { label: 'Ocho',              path: [1,2,3,5,7,8,9,5,1] },
+            { label: 'Full 9 puntos A',   path: [1,4,7,8,9,6,3,2,5] },
+            { label: 'Full 9 puntos B',   path: [3,6,9,8,7,4,1,2,5] },
+            { label: 'Full 9 puntos C',   path: [7,8,9,6,3,2,1,4,5] },
+            { label: 'Full 9 puntos D',   path: [1,4,5,2,3,6,9,8,7] },
+            { label: 'Full 9 puntos E',   path: [9,6,3,2,1,4,7,8,5] },
+            { label: 'Full 9 puntos F',   path: [7,4,1,2,5,3,6,9,8] }
+        ];
+
+        const CATEGORIES = [
+            { key: 'letras',    list: PATTERNS_LETRAS,    gridId: 'gridLetras',    badgeId: 'badgeLetras' },
+            { key: 'comunes',   list: PATTERNS_COMUNES,   gridId: 'gridComunes',   badgeId: 'badgeComunes' },
+            { key: 'complejos', list: PATTERNS_COMPLEJOS, gridId: 'gridComplejos', badgeId: 'badgeComplejos' }
+        ];
+
+        // ------------------------------------------------------------
+        // Cálculo de probabilidad (basado en ranking dentro de cada categoría
+        // + peso global por categoría: letras > comunes > complejos)
+        // ------------------------------------------------------------
+        function computeProbabilities(list, categoryWeight) {
             const n = list.length;
-            const weights = list.map((_, i) => 1 / Math.pow(i + 1, 0.8));
+            const weights = list.map((_, i) => (1 / Math.pow(i + 1, 0.8)) * categoryWeight);
             const sum = weights.reduce((a, b) => a + b, 0);
-            return weights.map(w => (w / sum) * 100);
+            return weights.map(w => (w / sum) * (100 * categoryWeight));
         }
 
-        const probsLetters = computeProbabilities(letterList);
-        const probsSimple = computeProbabilities(simpleList);
-        const probsComplex = computeProbabilities(complexList);
-
-        // ------------------------------------------------------------
-        // Dibujado de patrones en canvas
-        // ------------------------------------------------------------
-        function drawPattern(canvas, pattern, tested) {
-            const ctx = canvas.getContext('2d');
-            const size = canvas.width;
-            const margin = size * 0.15;
-            const dotRadius = size * 0.07;
-            const lineWidth = size * 0.05;
-
-            ctx.clearRect(0, 0, size, size);
-            ctx.fillStyle = '#0f1620';
-            ctx.fillRect(0, 0, size, size);
-
-            const pos = {};
-            for (let i = 1; i <= 9; i++) {
-                const row = Math.floor((i - 1) / 3);
-                const col = (i - 1) % 3;
-                const x = margin + col * (size - 2 * margin) / 2;
-                const y = margin + row * (size - 2 * margin) / 2;
-                pos[i] = { x, y };
-            }
-
-            const color = tested ? '#445566' : '#00d4ff';
-            const glowColor = tested ? 'transparent' : 'rgba(0, 212, 255, 0.3)';
-
-            const points = pattern.split('').map(Number);
-            if (points.length < 2) return;
-
-            ctx.beginPath();
-            ctx.strokeStyle = color;
-            ctx.lineWidth = lineWidth;
-            ctx.shadowColor = glowColor;
-            ctx.shadowBlur = tested ? 0 : 8;
-            ctx.moveTo(pos[points[0]].x, pos[points[0]].y);
-            for (let i = 1; i < points.length; i++) {
-                ctx.lineTo(pos[points[i]].x, pos[points[i]].y);
-            }
-            ctx.stroke();
-            ctx.shadowBlur = 0;
-
-            for (let i = 0; i < points.length; i++) {
-                const p = pos[points[i]];
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, dotRadius, 0, 2 * Math.PI);
-                ctx.fillStyle = color;
-                ctx.shadowColor = glowColor;
-                ctx.shadowBlur = tested ? 0 : 12;
-                ctx.fill();
-                ctx.shadowBlur = 0;
-                ctx.strokeStyle = '#0f1620';
-                ctx.lineWidth = 1.5;
-                ctx.stroke();
-            }
-
-            if (tested) {
-                ctx.strokeStyle = '#667';
-                ctx.lineWidth = 2;
-                ctx.shadowBlur = 0;
-                ctx.setLineDash([4, 4]);
-                ctx.beginPath();
-                ctx.moveTo(margin, margin);
-                ctx.lineTo(size - margin, size - margin);
-                ctx.stroke();
-                ctx.setLineDash([]);
-            }
-        }
+        const probsByCategory = {
+            letras:    computeProbabilities(PATTERNS_LETRAS, 1.0),
+            comunes:   computeProbabilities(PATTERNS_COMUNES, 0.6),
+            complejos: computeProbabilities(PATTERNS_COMPLEJOS, 0.25)
+        };
 
         // ------------------------------------------------------------
         // ESTADO (localStorage)
         // ------------------------------------------------------------
-        const STORAGE_KEY = 'patternGraphicTrackerV31';
+        const STORAGE_KEY = 'patternTrackerState';
 
         function loadState() {
             const stored = localStorage.getItem(STORAGE_KEY);
@@ -498,121 +453,117 @@
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         }
 
+        function keyFor(pattern) {
+            return pattern.path.join('-');
+        }
+
         function initState() {
             const existing = loadState();
-            const allLists = [letterList, simpleList, complexList];
-            const keys = ['letters', 'simple', 'complex'];
-
-            if (existing && typeof existing === 'object') {
-                let modified = false;
-                allLists.forEach((list, idx) => {
-                    const key = keys[idx];
-                    if (!existing[key]) { existing[key] = {}; modified = true; }
-                    list.forEach(p => {
-                        if (!(p in existing[key])) {
-                            existing[key][p] = false;
-                            modified = true;
-                        }
-                    });
+            const fresh = existing && typeof existing === 'object' ? existing : {};
+            let modified = !existing;
+            CATEGORIES.forEach(cat => {
+                if (!fresh[cat.key]) { fresh[cat.key] = {}; modified = true; }
+                cat.list.forEach(p => {
+                    const k = keyFor(p);
+                    if (!(k in fresh[cat.key])) {
+                        fresh[cat.key][k] = false;
+                        modified = true;
+                    }
                 });
-                if (modified) saveState(existing);
-                return existing;
-            } else {
-                const fresh = { 'letters': {}, 'simple': {}, 'complex': {} };
-                allLists.forEach((list, idx) => {
-                    list.forEach(p => fresh[keys[idx]][p] = false);
-                });
-                saveState(fresh);
-                return fresh;
-            }
+            });
+            if (modified) saveState(fresh);
+            return fresh;
         }
 
         let state = initState();
 
         // ------------------------------------------------------------
+        // SVG del patrón
+        // ------------------------------------------------------------
+        function buildPatternSVG(path) {
+            const pathSet = new Set(path);
+            let lines = '';
+            for (let i = 0; i < path.length - 1; i++) {
+                const [x1, y1] = COORDS[path[i]];
+                const [x2, y2] = COORDS[path[i + 1]];
+                lines += `<line class="line" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" />`;
+            }
+            let dots = '';
+            for (let n = 1; n <= 9; n++) {
+                const [x, y] = COORDS[n];
+                dots += `<circle class="dot-outer" cx="${x}" cy="${y}" r="9"></circle>`;
+            }
+            for (let n = 1; n <= 9; n++) {
+                const [x, y] = COORDS[n];
+                const isActive = pathSet.has(n);
+                const isStart = path[0] === n;
+                const isEnd = path[path.length - 1] === n;
+                let cls = 'dot';
+                if (isActive) cls += ' active';
+                if (isStart) cls += ' start-dot';
+                if (isEnd && !isStart) cls += ' end-dot';
+                dots += `<circle class="${cls}" cx="${x}" cy="${y}" r="5"></circle>`;
+            }
+            return `<svg class="pattern-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">${lines}${dots}</svg>`;
+        }
+
+        // ------------------------------------------------------------
         // RENDER
         // ------------------------------------------------------------
         function render() {
-            renderGrid('letters', letterList, probsLetters);
-            renderGrid('simple', simpleList, probsSimple);
-            renderGrid('complex', complexList, probsComplex);
+            CATEGORIES.forEach(cat => renderGrid(cat));
             updateStats();
         }
 
-        function renderGrid(type, list, probs) {
-            const containerMap = {
-                'letters': 'gridLetters',
-                'simple': 'gridSimple',
-                'complex': 'gridComplex'
-            };
-            const badgeMap = {
-                'letters': 'badgeLetters',
-                'simple': 'badgeSimple',
-                'complex': 'badgeComplex'
-            };
-            const container = document.getElementById(containerMap[type]);
-            const badge = document.getElementById(badgeMap[type]);
+        function renderGrid(cat) {
+            const container = document.getElementById(cat.gridId);
+            const badge = document.getElementById(cat.badgeId);
             if (!container) return;
 
-            const patternState = state[type] || {};
+            const catState = state[cat.key] || {};
+            const probs = probsByCategory[cat.key];
             let pending = 0;
-            list.forEach(p => { if (!patternState[p]) pending++; });
+            cat.list.forEach(p => { if (!catState[keyFor(p)]) pending++; });
             badge.textContent = pending + ' pendientes';
 
             let html = '';
-            list.forEach((pattern, index) => {
-                const tested = patternState[pattern] || false;
+            cat.list.forEach((pattern, index) => {
+                const k = keyFor(pattern);
+                const tested = catState[k] || false;
                 const prob = probs[index];
                 const probStr = prob.toFixed(2) + '%';
-                const length = pattern.length;
-                const classes = 'pattern-card' + (tested ? ' tested' : '');
-                const canvasId = 'canvas-' + type + '-' + index;
-                html += `<div class="${classes}" data-type="${type}" data-pattern="${pattern}">
-                            <canvas id="${canvasId}" width="80" height="80"></canvas>
-                            <div class="pattern-info">
-                                <span class="pattern-length">${length} puntos</span>
-                                <span class="probability">${probStr}</span>
-                            </div>
+                const classes = 'pin-card' + (tested ? ' tested' : '');
+                html += `<div class="${classes}" data-cat="${cat.key}" data-key="${k}">
+                            ${buildPatternSVG(pattern.path)}
+                            <div class="pattern-label">${pattern.label}</div>
+                            <div class="probability">${probStr}</div>
                         </div>`;
             });
             container.innerHTML = html;
 
-            list.forEach((pattern, index) => {
-                const canvasId = 'canvas-' + type + '-' + index;
-                const canvas = document.getElementById(canvasId);
-                if (canvas) {
-                    const tested = patternState[pattern] || false;
-                    drawPattern(canvas, pattern, tested);
-                }
-            });
-
-            container.querySelectorAll('.pattern-card').forEach(card => {
-                card.addEventListener('click', function(e) {
-                    const typeAttr = this.dataset.type;
-                    const pattern = this.dataset.pattern;
-                    togglePattern(typeAttr, pattern);
+            container.querySelectorAll('.pin-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const catKey = this.dataset.cat;
+                    const key = this.dataset.key;
+                    togglePattern(catKey, key);
                 });
             });
         }
 
-        function togglePattern(type, pattern) {
-            state[type][pattern] = !state[type][pattern];
+        function togglePattern(catKey, key) {
+            state[catKey][key] = !state[catKey][key];
             saveState(state);
             render();
         }
 
         function updateStats() {
-            const totalLetters = letterList.length;
-            const totalSimple = simpleList.length;
-            const totalComplex = complexList.length;
-            const total = totalLetters + totalSimple + totalComplex;
-
-            let testedLetters = 0, testedSimple = 0, testedComplex = 0;
-            letterList.forEach(p => { if (state['letters'][p]) testedLetters++; });
-            simpleList.forEach(p => { if (state['simple'][p]) testedSimple++; });
-            complexList.forEach(p => { if (state['complex'][p]) testedComplex++; });
-
-            const testedTotal = testedLetters + testedSimple + testedComplex;
+            let total = 0, testedTotal = 0;
+            CATEGORIES.forEach(cat => {
+                total += cat.list.length;
+                cat.list.forEach(p => {
+                    if (state[cat.key][keyFor(p)]) testedTotal++;
+                });
+            });
             const pendingTotal = total - testedTotal;
 
             document.getElementById('pendingCount').textContent = pendingTotal;
@@ -625,9 +576,9 @@
         // ------------------------------------------------------------
         function resetAll() {
             if (!confirm('¿Marcar todos los patrones como NO probados?')) return;
-            letterList.forEach(p => state['letters'][p] = false);
-            simpleList.forEach(p => state['simple'][p] = false);
-            complexList.forEach(p => state['complex'][p] = false);
+            CATEGORIES.forEach(cat => {
+                cat.list.forEach(p => { state[cat.key][keyFor(p)] = false; });
+            });
             saveState(state);
             render();
         }
