@@ -13,8 +13,8 @@
         }
         body {
             font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
-            background: linear-gradient(180deg, #f5f7f8 0%, #eef2f3 100%);
-            color: #1f2937;
+            background: radial-gradient(circle at top, #12303a 0%, #0b1117 32%, #070b10 100%);
+            color: #e6faff;
             padding: 1.5rem;
             min-height: 100vh;
             display: flex;
@@ -23,9 +23,9 @@
         .container {
             max-width: 1300px;
             width: 100%;
-            background: white;
+            background: rgba(10, 16, 24, 0.9);
             border-radius: 2rem;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.24);
             padding: 2rem 2rem 2.5rem;
         }
         h1 {
@@ -46,7 +46,7 @@
             border-radius: 40px;
         }
         .subtitle {
-            color: #6b7280;
+            color: #9fb7c3;
             margin-top: 0.3rem;
             margin-bottom: 2rem;
             font-size: 1.05rem;
@@ -57,12 +57,14 @@
             display: flex;
             flex-wrap: wrap;
             gap: 1.2rem 2.5rem;
-            background: #f5f7f8;
+            background: linear-gradient(180deg, rgba(70, 32, 10, 0.96) 0%, rgba(126, 58, 14, 0.96) 100%) !important;
             padding: 1.2rem 1.8rem;
             border-radius: 1.2rem;
             margin-bottom: 2.2rem;
             align-items: center;
             justify-content: space-between;
+            border: 1px solid rgba(251, 191, 36, 0.42) !important;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.24);
         }
         .stats {
             display: flex;
@@ -75,32 +77,22 @@
             gap: 0.4rem;
         }
         .stat-item .label {
-            font-weight: 500;
-            color: #475569;
+            font-weight: 700 !important;
+            color: #ffedd5 !important;
+            
+
         }
         .stat-item .value {
-            font-weight: 700;
-            font-size: 1.4rem;
-            color: #1f2937;
+            font-weight: 800 !important;
+            font-size: 1.52rem !important;
+            color: #ffffff !important;
+            
+
         }
-        .stat-item .value.pending { color: #dc2626; }
-        .stat-item .value.tested { color: #059669; }
-        .btn-reset {
-            background: #fee2e2;
-            color: #b91c1c;
-            border: none;
-            padding: 0.5rem 1.6rem;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-        .btn-reset:hover { background: #fecaca; transform: scale(1.02); }
-        .btn-reset:active { transform: scale(0.97); }
+        .stat-item .value.pending { color: #fde68a !important; 
+ }
+        .btn-reset:hover { background: #fecaca; transform: none; }
+        .btn-reset:active { transform: none; }
 
         .section-title {
             font-size: 1.6rem;
@@ -111,12 +103,12 @@
             gap: 0.8rem;
         }
         .section-title .badge {
-            background: #dbe4e8;
+            background: rgba(34, 211, 238, 0.12);
             padding: 0.1rem 1rem;
             border-radius: 30px;
             font-size: 0.9rem;
             font-weight: 500;
-            color: #475569;
+            color: #c7dbe6;
         }
         .section-desc {
             color: #94a3b8;
@@ -133,15 +125,15 @@
         }
 
         .pin-card {
-            background: #ffffff;
+            background: linear-gradient(180deg, rgba(10,17,26,0.96) 0%, rgba(12,21,32,0.96) 100%);
             border: 2px solid #e9edf2;
             border-radius: 1rem;
             padding: 0.7rem 0.5rem 0.6rem;
             text-align: center;
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: border-color 0.12s ease, background 0.12s ease;
             user-select: none;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.24);
             position: relative;
             display: flex;
             flex-direction: column;
@@ -154,11 +146,11 @@
             font-weight: 700;
             font-family: 'Courier New', monospace;
             letter-spacing: 0.5px;
-            color: #475569;
+            color: #c7dbe6;
         }
         .pin-card .probability {
             font-size: 0.7rem;
-            color: #6b7280;
+            color: #9fb7c3;
             background: #eef2f3;
             padding: 0.1rem 0.5rem;
             border-radius: 20px;
@@ -168,8 +160,8 @@
         .pin-card:hover:not(.tested) {
             border-color: #a5b4fc;
             background: #f8faff;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 16px rgba(79,70,229,0.08);
+            transform: none;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.24);
         }
         .pin-card.tested {
             background: #eef2f3;
@@ -178,7 +170,7 @@
             cursor: default;
             opacity: 0.7;
             transform: none;
-            box-shadow: none;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.24);
         }
         .pin-card.tested .pattern-label {
             text-decoration: line-through;
@@ -187,7 +179,7 @@
             color: #94a3b8;
         }
         .pin-card.tested .probability {
-            background: #dbe4e8;
+            background: rgba(34, 211, 238, 0.12);
             color: #94a3b8;
         }
         .pin-card.tested svg .dot { fill: #cbd5db !important; }
@@ -266,17 +258,18 @@
         }
     
         body {
-            background: linear-gradient(180deg, #f5f7f8 0%, #eef2f3 100%);
-            color: #1f2937;
+            background: radial-gradient(circle at top, #12303a 0%, #0b1117 32%, #070b10 100%);
+            color: #e6faff;
         }
         .container {
             max-width: 1180px;
         }
         .header, .stats, .section {
             background: rgba(255,255,255,.86);
-            backdrop-filter: blur(8px);
-            border: 1px solid #dbe4e8;
-            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+            
+
+            border: 1px solid rgba(103, 232, 249, 0.18);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.24);
         }
         .header h1 {
             letter-spacing: -0.02em;
@@ -285,18 +278,18 @@
             margin-top: 14px;
             padding: 12px 14px;
             border-radius: 14px;
-            background: #ecfeff;
-            border: 1px solid #bae6fd;
-            color: #155e75;
+            background: rgba(8, 31, 44, 0.9);
+            border: 1px solid rgba(34, 211, 238, 0.18);
+            color: #b6f7ff;
             font-size: 0.98rem;
         }
         .pin-card {
             transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
         }
         .pin-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 22px rgba(15, 23, 42, 0.08);
-            border-color: #99f6e4;
+            transform: none;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.24);
+            border-color: rgba(103, 232, 249, 0.72);
         }
         .pin-card .pattern-label {
             font-size: 1rem;
@@ -308,8 +301,223 @@
         .footer-note {
             margin-top: 18px;
             text-align: center;
-            color: #6b7280;
+            color: #9fb7c3;
             font-size: .95rem;
+        }
+        .container { 
+ }
+        h1 { color: #ecfeff; 
+ }
+        .subtitle, .section-desc, .footer-note { color: #89a7b5; }
+        .stats-grid, .section-title .badge { box-shadow: 0 6px 18px rgba(0,0,0,0.24); }
+        .section, .stats-grid { border: 1px solid rgba(103, 232, 249, 0.12); }
+        .pin-card {
+            position: relative;
+            background: linear-gradient(180deg, rgba(10,17,26,0.96) 0%, rgba(12,21,32,0.96) 100%);
+            border: 1px solid rgba(103, 232, 249, 0.18);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.24);
+        }
+        .pin-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 1rem;
+            background: linear-gradient(180deg, rgba(103,232,249,0.06), transparent 38%);
+            opacity: .85;
+            pointer-events: none;
+        }
+        .pin-card:hover:not(.tested) {
+            border-color: rgba(103, 232, 249, 0.72);
+            background: linear-gradient(180deg, rgba(13,25,36,1) 0%, rgba(18,34,47,1) 100%);
+            transform: none;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.24);
+        }
+        .pin-card .pattern-label {
+            color: #dffcff;
+            
+
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        .pin-card .probability, .pin-card .prob {
+            font-size: 0.74rem;
+            color: #d7f8ff;
+            background: rgba(103, 232, 249, 0.10);
+            border: 1px solid rgba(103,232,249,0.14);
+            padding: 0.14rem 0.55rem;
+            border-radius: 20px;
+            margin-top: 0.28rem;
+            font-weight: 700;
+            transition: 0.2s;
+            display: inline-block;
+        }
+        .pattern-svg .dot-outer { stroke: rgba(125, 211, 252, 0.35) !important; }
+        .pattern-svg .dot { fill: #8fb6c4 !important; }
+        .pattern-svg .dot.active { fill: #67e8f9 !important; 
+ }
+        .pattern-svg .line { stroke: rgba(103,232,249,.82) !important; 
+ }
+        .pattern-svg .start-dot { fill: #22c55e !important; 
+ }
+        .pattern-svg .end-dot { fill: #fb7185 !important; 
+ }
+        .pin-card.priority {
+            border-color: rgba(103, 232, 249, 0.95);
+            background: linear-gradient(180deg, rgba(8,30,43,0.98) 0%, rgba(13,52,72,0.98) 100%);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.24);
+        }
+        .pin-card.priority .pattern-label {
+            color: #ffffff;
+            
+
+        }
+        .pin-card.priority .probability, .pin-card.priority .prob {
+            background: rgba(103,232,249,0.22);
+            color: #ecfeff;
+            border: 1px solid rgba(103,232,249,0.35);
+            font-weight: 800;
+        }
+        .pin-card.tested {
+            background: rgba(71, 85, 105, 0.24);
+            border-color: rgba(148, 163, 184, 0.18);
+            color: #7b93a2;
+            opacity: 0.62;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.24);
+        }
+        .pin-card.tested .pattern-label,
+        .pin-card.tested .probability,
+        .pin-card.tested .prob { color: #7b93a2 !important; 
+ }
+        .pin-card.tested svg .dot { fill: #4b5e6b !important; }
+        .pin-card.tested svg .dot-outer { stroke: #4b5e6b !important; }
+        .pin-card.tested svg .line { stroke: #4b5e6b !important; }
+
+
+        .stats-grid {
+            background: linear-gradient(180deg, rgba(9,16,24,0.96) 0%, rgba(12,24,34,0.96) 100%) !important;
+            border: 1px solid rgba(103, 232, 249, 0.20) !important;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.24);
+        }
+        .stat-item .label {
+            color: #b9d7e4 !important;
+            font-weight: 700 !important;
+            
+
+        }
+        .stat-item .value {
+            color: #f4feff !important;
+            font-size: 1.48rem !important;
+            font-weight: 800 !important;
+            
+
+        }
+        .stat-item .value.pending {
+            color: #67e8f9 !important;
+            
+
+        }
+        .stat-item .value.tested { color: #86efac !important; 
+ }
+        #totalCount { color: #ffffff !important; 
+ }
+
+
+        body {
+            background: linear-gradient(180deg, #0b1117 0%, #0c1620 100%);
+            color: #ecfeff;
+        }
+        .container {
+            background: #0f1722;
+            border: 1px solid rgba(96, 165, 250, 0.18);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.28);
+        }
+        .stats-grid {
+            box-shadow: 0 8px 18px rgba(0,0,0,0.28) !important;
+        }
+        .section, .header, .stats {
+            background: transparent;
+        }
+        .section-title .badge {
+            background: rgba(59, 130, 246, 0.16);
+            color: #dbeafe;
+            border: 1px solid rgba(96, 165, 250, 0.16);
+        }
+        .pin-card {
+            background: linear-gradient(180deg, #111b27 0%, #162230 100%);
+            border: 1px solid rgba(96, 165, 250, 0.18);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.24);
+        }
+        .pin-card:hover:not(.tested) {
+            background: linear-gradient(180deg, #132131 0%, #1a2d40 100%);
+            border-color: rgba(125, 211, 252, 0.52);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.30);
+        }
+        .pin-card.priority {
+            background: linear-gradient(180deg, #1d2735 0%, #243244 100%);
+            border: 2px solid rgba(251, 191, 36, 0.88);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.32);
+        }
+        .pin-card.priority .pattern-label,
+        .pin-card.priority .prob {
+            color: #fff7d6 !important;
+        }
+        .pin-card .pattern-label {
+            color: #f8fafc;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        .pin-card .prob {
+            background: rgba(59, 130, 246, 0.16);
+            color: #e0f2fe;
+            border: 1px solid rgba(96, 165, 250, 0.18);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.14rem 0.55rem;
+            border-radius: 20px;
+        }
+        .pattern-svg {
+            width: 78px;
+            height: 78px;
+        }
+        .pattern-svg .dot-outer {
+            stroke: #4b6277 !important;
+            stroke-width: 2.4 !important;
+        }
+        .pattern-svg .dot {
+            fill: #d1d9e0 !important;
+        }
+        .pattern-svg .dot.active {
+            fill: #f8fafc !important;
+        }
+        .pattern-svg .line {
+            stroke: #fbbf24 !important;
+            stroke-width: 6.2 !important;
+            stroke-linecap: round !important;
+        }
+        .pattern-svg .start-dot {
+            fill: #22c55e !important;
+        }
+        .pattern-svg .end-dot {
+            fill: #ef4444 !important;
+        }
+        .pin-card.tested {
+            background: rgba(71, 85, 105, 0.24);
+            border-color: rgba(148, 163, 184, 0.18);
+            color: #7b93a2;
+            opacity: 0.62;
+            box-shadow: none;
+        }
+        .pin-card.tested .pattern-label,
+        .pin-card.tested .prob {
+            color: #7b93a2 !important;
+        }
+        .pin-card.tested svg .dot { fill: #6b7280 !important; }
+        .pin-card.tested svg .dot-outer { stroke: #475569 !important; }
+        .pin-card.tested svg .line { stroke: #64748b !important; }
+        @media (max-width: 640px) {
+            .container { box-shadow: 0 6px 16px rgba(0,0,0,0.24); }
+            .pin-card, .pin-card.priority, .pin-card:hover:not(.tested), .stats-grid { box-shadow: none !important; }
+            .pattern-svg { width: 72px; height: 72px; }
         }
 </style>
 </head>
@@ -320,9 +528,7 @@
             🔓 Control de PATRONES
             <span>Letras + Comunes + Complejos</span>
         </h1>
-        <div class="subtitle">
-            Marca los patrones de desbloqueo (grilla 3x3 tipo Android) que ya has probado. Están ordenados desde letras reconocibles y patrones comunes hasta combinaciones más complejas, para trabajar de forma clara y rápida.
-        </div>
+        
 </header>
 
     <div class="stats-grid">
@@ -339,7 +545,7 @@
         <span>🔤 Letras del abecedario</span>
         <span class="badge" id="badgeLetras">Pendientes: 0</span>
     </div>
-    <div class="section-desc">Los patrones más usados: forman una letra reconocible (L, Z, S, M, W, N, C, U, V...). Son los primeros que la gente prueba.</div>
+    
     <div class="pin-grid" id="gridLetras"></div>
 
     <!-- Sección Comunes -->
@@ -347,7 +553,7 @@
         <span>⭐ Comunes</span>
         <span class="badge" id="badgeComunes">Pendientes: 0</span>
     </div>
-    <div class="section-desc">Patrones simples y simétricos: esquinas, líneas rectas, zigzags cortos. Muy frecuentes en dispositivos reales.</div>
+    
     <div class="pin-grid" id="gridComunes"></div>
 
     <!-- Sección Complejos -->
@@ -355,16 +561,16 @@
         <span>🧩 Complejos</span>
         <span class="badge" id="badgeComplejos">Pendientes: 0</span>
     </div>
-    <div class="section-desc">Patrones largos (7-9 puntos) con cruces y giros. Menos comunes pero posibles en usuarios más cuidadosos.</div>
+    
     <div class="pin-grid" id="gridComplejos"></div>
 
     <div class="footer">
-        Probabilidad orientativa basada en patrones que la gente suele recordar o intentar primero en bloqueos Android. Úsalo como guía visual, no como criterio absoluto.
-        <br />Grilla estándar 3x3 — el punto verde marca el inicio y el rojo el final del trazo.
-        <br /><span style="opacity:0.6;">v1.0 — Patrones</span>
+        
+        <br />
+        <br /><span style="opacity:0.6;"></span>
     </div>
-    <div class="help-note">Pensado para revisión rápida en taller: letras arriba, patrones comunes al centro y combinaciones largas al final. El punto verde marca el inicio y el rojo el cierre del trazo.</div>
-    <div class="footer-note">Diseño más limpio, alto contraste y mejor lectura para uso rápido en escritorio o móvil.</div>
+    
+    
 </div>
 
 <script>
@@ -605,7 +811,8 @@
                 const tested = catState[k] || false;
                 const prob = probs[index];
                 const probStr = prob.toFixed(2) + '%';
-                const classes = 'pin-card' + (tested ? ' tested' : '');
+                const isPriority = (cat.key === 'letras' && index < 8) || (cat.key === 'comunes' && index < 8);
+                const classes = 'pin-card' + (isPriority ? ' priority' : '') + (tested ? ' tested' : '');
                 html += `<div class="${classes}" data-cat="${cat.key}" data-key="${k}">
                             ${buildPatternSVG(pattern.path)}
                             <div class="pattern-label">${pattern.label}</div>
